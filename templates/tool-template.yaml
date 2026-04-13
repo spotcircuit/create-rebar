@@ -1,0 +1,23 @@
+# tools/{tool-name}/tool.yaml
+# Config for tools and integrations that rebar uses
+
+tool:
+  name: {tool-name}
+  display_name: {Tool Display Name}
+  type: integration  # orchestration | outreach | publishing | infrastructure
+
+purpose: >
+  {What this tool does and how rebar uses it}
+
+config:
+  location: ~        # where config lives (e.g. system/paperclip.yaml)
+  docs: ~            # URL or path to docs
+
+runtime:
+  how_to_start: ~    # command to start
+  port: ~            # if it runs a server
+  api_base: ~        # API endpoint if queryable
+  database: ~        # where history/state lives
+
+dependencies:
+  - "{What this tool needs to run}"

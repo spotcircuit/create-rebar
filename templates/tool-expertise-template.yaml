@@ -1,0 +1,23 @@
+# tools/{tool-name}/expertise.yaml
+# Created: {date}
+# Purpose: Operational knowledge for this tool integration
+
+meta:
+  tool: {tool-name}
+  display_name: {Tool Display Name}
+  last_updated: {date}
+
+integration:
+  description: >
+    {How rebar integrates with this tool}
+  data_flow: >
+    {What rebar sends to and reads from this tool}
+
+known_issues:
+  # Known bugs, gotchas, workarounds
+
+implementation_patterns:
+  # Patterns for working with this tool
+
+unvalidated_observations:
+  # Raw observations -- validated by /improve

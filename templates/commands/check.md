@@ -13,14 +13,15 @@ Updates `compliance:` section in expertise.yaml with results.
 ## Variables
 
 CLIENT: $ARGUMENTS
-GUIDELINES: se-guidelines/design-and-build.md
+GUIDELINES: system/guidelines/project-readiness.md
 
 ## Resolution
 
-Resolve CLIENT to a base directory. Check `BASE_DIR` first, then `apps/CLIENT`:
-- If `BASE_DIR/expertise.yaml` exists → BASE_DIR = `BASE_DIR`
+Resolve CLIENT to a base directory. Check `clients/CLIENT`, then `apps/CLIENT`, then `tools/CLIENT`:
+- If `clients/CLIENT/expertise.yaml` exists → BASE_DIR = `clients/CLIENT`
 - Else if `apps/CLIENT/expertise.yaml` exists → BASE_DIR = `apps/CLIENT`
-- Else if CLIENT is empty: scan both `clients/*/expertise.yaml` and `apps/*/expertise.yaml` (excluding `_templates`). If exactly one match, use it. Otherwise list all and ask.
+- Else if `tools/CLIENT/expertise.yaml` exists → BASE_DIR = `tools/CLIENT`
+- Else if CLIENT is empty: scan `clients/*/expertise.yaml`, `apps/*/expertise.yaml`, and `tools/*/expertise.yaml` (excluding `_templates`). If exactly one match, use it. Otherwise list all and ask.
 
 PHASE0: BASE_DIR/phase-0-discovery.md
 EXPERTISE: BASE_DIR/expertise.yaml
@@ -37,7 +38,7 @@ EXPERTISE: BASE_DIR/expertise.yaml
 ## Step 1: Read Documents
 
 Read `BASE_DIR/phase-0-discovery.md` in full.
-Read `se-guidelines/design-and-build.md` sections §0.1, §0.2, §0.3.
+Read `system/guidelines/project-readiness.md` sections §0.1, §0.2, §0.3.
 
 ---
 

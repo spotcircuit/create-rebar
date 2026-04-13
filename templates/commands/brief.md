@@ -15,10 +15,11 @@ CLIENT: $ARGUMENTS
 
 ## Resolution
 
-Resolve CLIENT to a base directory. Check `clients/CLIENT` first, then `apps/CLIENT`:
-- If `BASE_DIR/expertise.yaml` exists → BASE_DIR = `clients/CLIENT`
+Resolve CLIENT to a base directory. Check `clients/CLIENT`, then `apps/CLIENT`, then `tools/CLIENT`:
+- If `clients/CLIENT/expertise.yaml` exists → BASE_DIR = `clients/CLIENT`
 - Else if `apps/CLIENT/expertise.yaml` exists → BASE_DIR = `apps/CLIENT`
-- Else if CLIENT is empty: scan both `clients/*/expertise.yaml` and `apps/*/expertise.yaml` (excluding `_templates`). If exactly one match, use it. Otherwise list all and ask.
+- Else if `tools/CLIENT/expertise.yaml` exists → BASE_DIR = `tools/CLIENT`
+- Else if CLIENT is empty: scan `clients/*/expertise.yaml`, `apps/*/expertise.yaml`, and `tools/*/expertise.yaml` (excluding `_templates`). If exactly one match, use it. Otherwise list all and ask.
 
 EXPERTISE: BASE_DIR/expertise.yaml
 

@@ -16,10 +16,11 @@ CLIENT: $ARGUMENTS
 
 ## Resolution
 
-Resolve CLIENT to a base directory. Check `clients/CLIENT` first, then `apps/CLIENT`:
+Resolve CLIENT to a base directory. Check `clients/CLIENT`, then `apps/CLIENT`, then `tools/CLIENT`:
 - If `clients/CLIENT/` exists → BASE_DIR = `clients/CLIENT`
 - Else if `apps/CLIENT/` exists → BASE_DIR = `apps/CLIENT`
-- Else if CLIENT is empty: scan both `clients/` and `apps/` (excluding `_templates`). List all and ask.
+- Else if `tools/CLIENT/` exists → BASE_DIR = `tools/CLIENT`
+- Else if CLIENT is empty: scan `clients/`, `apps/`, and `tools/` (excluding `_templates`). List all and ask.
 
 CLIENT_DIR: BASE_DIR
 CONFIG: BASE_DIR/client.yaml

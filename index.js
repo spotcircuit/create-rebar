@@ -140,7 +140,19 @@ copyFile(
   path.join(clientsTemplatesDir, 'phase-0-discovery.md')
 );
 
-// 6. Create wiki/
+// 6. Create tools/_templates/
+const toolsTemplatesDir = path.join(targetDir, 'tools', '_templates');
+ensureDir(toolsTemplatesDir);
+copyFile(
+  path.join(templatesDir, 'tool-template.yaml'),
+  path.join(toolsTemplatesDir, 'tool.yaml')
+);
+copyFile(
+  path.join(templatesDir, 'tool-expertise-template.yaml'),
+  path.join(toolsTemplatesDir, 'expertise.yaml')
+);
+
+// 7. Create wiki/
 const wikiDir = path.join(targetDir, 'wiki');
 ensureDir(wikiDir);
 copyFile(
@@ -148,13 +160,13 @@ copyFile(
   path.join(wikiDir, 'README.md')
 );
 
-// 7. Create raw/ and raw/processed/
+// 8. Create raw/ and raw/processed/
 ensureDir(path.join(targetDir, 'raw', 'processed'));
 
-// 8. Create system/ and system/drafts/
+// 9. Create system/ and system/drafts/
 ensureDir(path.join(targetDir, 'system', 'drafts'));
 
-// 9. Create .gitignore additions
+// 10. Create .gitignore additions
 const gitignorePath = path.join(targetDir, '.gitignore');
 const gitignoreEntries = [
   '# Rebar - sensitive config files',
@@ -162,6 +174,7 @@ const gitignoreEntries = [
   'apps/*/app.yaml',
   'clients/*/research/',
   'apps/*/research/',
+  'tools/*/research/',
   '',
 ].join('\n');
 
@@ -182,6 +195,7 @@ console.log(`  ${c.green}\u2713${c.reset} ${c.bold}.claude/commands/${c.reset}  
 console.log(`  ${c.green}\u2713${c.reset} ${c.bold}CLAUDE.md${c.reset}             ${c.dim}Project configuration${c.reset}`);
 console.log(`  ${c.green}\u2713${c.reset} ${c.bold}apps/_templates/${c.reset}      ${c.dim}App scaffolding templates${c.reset}`);
 console.log(`  ${c.green}\u2713${c.reset} ${c.bold}clients/_templates/${c.reset}   ${c.dim}Client engagement templates${c.reset}`);
+console.log(`  ${c.green}\u2713${c.reset} ${c.bold}tools/_templates/${c.reset}     ${c.dim}Tool integration templates${c.reset}`);
 console.log(`  ${c.green}\u2713${c.reset} ${c.bold}wiki/${c.reset}                 ${c.dim}Knowledge wiki${c.reset}`);
 console.log(`  ${c.green}\u2713${c.reset} ${c.bold}raw/${c.reset}                  ${c.dim}File intake folder${c.reset}`);
 console.log(`  ${c.green}\u2713${c.reset} ${c.bold}system/${c.reset}               ${c.dim}System drafts${c.reset}`);

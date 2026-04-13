@@ -58,7 +58,7 @@ Find pages not modified in 14+ days.
 
 ## Step 5: Contradiction Check
 
-Compare wiki pages against `clients/*/expertise.yaml` and `apps/*/expertise.yaml` for conflicts.
+Compare wiki pages against `clients/*/expertise.yaml`, `apps/*/expertise.yaml`, and `tools/*/expertise.yaml` for conflicts.
 - Check version numbers, status claims, record counts, named owners.
 - If no expertise.yaml files exist, skip.
 

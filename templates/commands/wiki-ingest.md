@@ -1,5 +1,5 @@
 ---
-allowed-tools: Read, Write, Edit, Bash, Glob
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep
 description: Scan raw/ folder for unprocessed files and ingest them into the wiki as structured pages
 argument-hint: [client-name]
 ---
@@ -208,7 +208,80 @@ If the move fails, warn but do not retry — leave the file in place.
 
 ---
 
-## Step 7: Report
+## Step 7: Self-Learn — Detect and Feed Expertise
+
+Wiki-ingest is not just a wiki tool — it closes the self-learn loop by feeding observations
+back into expertise.yaml for any relevant app or client.
+
+### 7a. Discover Relevant Expertise Files
+
+Scan all existing apps and clients for expertise.yaml:
+
+```bash
+ls clients/*/expertise.yaml apps/*/expertise.yaml tools/*/expertise.yaml 2>/dev/null | grep -v _templates
+```
+
+Build a lookup: `{name} → {path to expertise.yaml}`.
+
+### 7b. Match Ingested Content to Apps/Clients
+
+For each raw file processed, check if its content references any known app or client:
+- Direct name matches (e.g., file mentions "site-builder", "demo-corp", "spotcircuit")
+- Keyword matches from expertise.yaml fields (repo names, framework names, domain names)
+- If CLIENT was passed as an argument, always include that expertise file
+
+Also check: does the content describe a system/tool/project that has NO expertise file?
+If so, note it as an **unowned observation** — candidate for a new app or client entry.
+
+### 7c. Extract Observations from Ingested Content
+
+For each raw file, extract actionable observations — things that would be valuable in an
+expertise.yaml. Look for:
+
+- **Bugs/broken features** — "X is broken", "doesn't work", status issues
+- **Architecture patterns** — how components connect, data flow, key design choices
+- **API gotchas** — rate limits, auth quirks, endpoint behavior
+- **Known issues** — workarounds, things that need fixing
+- **State changes** — what's deployed, what's pending, what's blocked
+- **Key files/paths** — important files that an SE would need to find
+- **Config/settings** — hardcoded values, env vars, credentials needed
+
+Format each as a one-line observation string, prefixed with the source file:
+
+```
+"[raw/filename.md] Observation text here"
+```
+
+### 7d. Append Observations to Expertise Files
+
+For each matched expertise.yaml, append the relevant observations to its
+`unvalidated_observations:` section. Read the file, append, write back, validate YAML.
+
+```bash
+python3 -c "import yaml; yaml.safe_load(open('PATH/expertise.yaml'))"
+```
+
+Rules:
+- Never overwrite existing observations — append only
+- Never promote observations directly — that is `/improve`'s job
+- If an observation is already captured in the main expertise sections, skip it
+- Keep observations concise (one line each)
+- Update `last_updated:` in the meta/top-level section to today's date
+
+### 7e. Handle Unowned Observations
+
+If observations were extracted that don't match any existing app/client:
+
+1. Group them by the system/project they describe
+2. For each group, check if a directory should be created:
+   - Does it describe an internal tool? → candidate for `apps/{name}/`
+   - Does it describe a client engagement? → candidate for `clients/{name}/`
+3. Do NOT auto-create — list them in the report as "Unowned observations"
+   with a suggestion: `Run /create {name} or manually create apps/{name}/app.yaml`
+
+---
+
+## Step 8: Report
 
 ```
 Wiki Ingest Complete
@@ -225,11 +298,18 @@ Pages created:
 Pages updated:
   - wiki/decisions/page-name.md
 
-expertise.yaml gaps noted (run /improve to integrate):
-  - {observation if any}
+Self-learn:
+  Observations appended: {N total}
+    - apps/{name}/expertise.yaml: {N observations}
+    - clients/{name}/expertise.yaml: {N observations}
+
+  Unowned observations (no expertise.yaml found):
+    - "{observation}" → suggested: apps/{name}/ or clients/{name}/
+    - Run /create {name} to scaffold, then /improve {name} to validate
 
 Files moved to raw/processed/:
   - filename.ext
-```
 
-If CLIENT was set and expertise.yaml gaps were found, suggest running `/improve CLIENT`.
+Next steps:
+  - Run /improve {name} for each expertise.yaml that received observations
+```

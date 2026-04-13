@@ -16,7 +16,12 @@ Based on Andrej Karpathy's LLM Wiki pattern, extended with structured operationa
 **For apps (internal tools/products):**
 1. Copy `apps/_templates/app.yaml` to `apps/{name}/app.yaml` and fill it in
 2. Same commands work: `/brief {name}`, `/improve {name}`, etc.
-3. All `/*` commands auto-resolve names from both `clients/` and `apps/`
+3. All `/*` commands auto-resolve names from `clients/`, `apps/`, and `tools/`
+
+**For tools (infrastructure rebar depends on):**
+1. Copy `tools/_templates/tool.yaml` to `tools/{name}/tool.yaml` and fill it in
+2. Same commands work: `/brief {name}`, `/improve {name}`, etc.
+3. Tools are things rebar *uses* (Paperclip, Obsidian, Quartz), not things you *build with* rebar
 
 **For knowledge:**
 4. Drop files in `raw/` and run `/wiki-ingest` to build the wiki
@@ -40,22 +45,23 @@ Based on Andrej Karpathy's LLM Wiki pattern, extended with structured operationa
 
 ## Directory Structure
 
-Both `clients/` and `apps/` use the same layout. All `/*` commands resolve names from either.
+All three directories use the same layout. All `/*` commands resolve names from any of them.
 
 ```
-clients/{name}/                    apps/{name}/
-  client.yaml   <- GITIGNORED       app.yaml      <- GITIGNORED
-  phase-0-discovery.md               phase-0-discovery.md
-  expertise.yaml                     expertise.yaml
+clients/{name}/                    apps/{name}/                       tools/{name}/
+  client.yaml   <- GITIGNORED       app.yaml      <- GITIGNORED       tool.yaml
+  phase-0-discovery.md               phase-0-discovery.md               expertise.yaml
+  expertise.yaml                     expertise.yaml                     notes.md
   notes.md                           notes.md
   specs/                             specs/
   research/     <- GITIGNORED        research/     <- GITIGNORED
 ```
 
 - `clients/` = external engagements (revenue-generating)
-- `apps/` = internal tools and products (site-builder, etc.)
+- `apps/` = internal tools and products you're actively building
+- `tools/` = infrastructure rebar depends on (Paperclip, Obsidian, Quartz)
 
-Templates: `clients/_templates/`, `apps/_templates/`
+Templates: `clients/_templates/`, `apps/_templates/`, `tools/_templates/`
 
 ---
 
