@@ -1,0 +1,33 @@
+{
+  "name": "create-rebar",
+  "version": "1.0.0",
+  "description": "Scaffold Rebar into any Claude Code project — structural memory with 23 slash commands",
+  "main": "index.js",
+  "bin": {
+    "create-rebar": "index.js"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "rebar",
+    "scaffold",
+    "slash-commands",
+    "ai",
+    "llm",
+    "knowledge-management"
+  ],
+  "author": "spotcircuit",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spotcircuit/create-rebar.git"
+  },
+  "homepage": "https://getrebar.dev",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "index.js",
+    "templates/"
+  ]
+}
