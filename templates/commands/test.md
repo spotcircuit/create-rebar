@@ -129,7 +129,7 @@ IMPORTANT: After the human-readable report above, ALWAYS output this JSON block.
   {
     "test_name": "<describe block + test name, e.g. 'personas > POST /personas > creates a persona'>",
     "passed": true,
-    "execution_command": "<exact command that ran this test suite, e.g. 'cd apps/prepitch/backend && bun test src/tests/'>",
+    "execution_command": "<exact command that ran this test suite, e.g. 'cd apps/myapp/backend && bun test src/tests/'>",
     "test_purpose": "<one-line description of what this test validates>",
     "error": null
   },
